@@ -4,7 +4,7 @@ require( 'jasmine' );
 
 var oldConsoleLog = console.log;
 
-var App = require("brjsusagedashboard/App");
+var App = require("dashboard/App");
 
 describe('App Tests', function() {
 

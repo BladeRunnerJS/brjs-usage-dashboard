@@ -1,0 +1,6 @@
+{
+  "undef": true,
+  "unused": true,
+  "predef": [ "module", "document", "require", "console" ],
+  "strict": false
+}
