@@ -1,6 +1,7 @@
 'use strict';
 
 var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
+var ServiceRegistry = require( 'br/ServiceRegistry' );
 
 // Blades
 var OSInfoBlade = require( 'dashboard/osinfo/OsinfoViewModel' );
@@ -11,6 +12,10 @@ var BrjsvctViewBlade = require( 'dashboard/brjsvct/BrjsvctViewModel' );
 var ActivitylogViewBlade = require( 'dashboard/activitylog/ActivitylogViewModel' );
 
 var App = function() {
+  var StatsService = require( 'statservice/Service' );
+  var statService = new StatsService();
+  ServiceRegistry.registerService( 'stat.service', statService );
+
   this._statsEl = document.getElementById("stats");
 
   this._addBladeToUI( OSInfoBlade, 'dashboard.osinfo.view-template' );
