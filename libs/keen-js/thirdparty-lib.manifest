@@ -1,2 +1,2 @@
-js: keen.min.js
-exports: null
+js: keen.js
+exports: Keen
