@@ -10,7 +10,7 @@ function AverageFilesInApp() {
 	});
 
 	// TODO: separate request and response from UI update (Visualization)
-	var request = window.KEEN_CLIENT.run(averageAppFileCount, function(response){
+	var averageAppFileRequest = window.KEEN_CLIENT.run(averageAppFileCount, function(response){
 	  // Pass in raw data, or reference to "this" (request instance)
 	  var myChart = new Keen.Visualization(this, document.getElementById("avg-files"), {
 		  chartType: "metric",
@@ -22,7 +22,7 @@ function AverageFilesInApp() {
 
 	// TODO: update to be triggered upon Firebase update
 	setInterval( function() {
-		request.refresh();
+		averageAppFileRequest.refresh();
 	}, 10000 );
 
 }

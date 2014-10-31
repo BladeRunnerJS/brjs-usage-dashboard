@@ -15,6 +15,7 @@ var OSInfoBlade = require( 'dashboard/osinfo/OsinfoViewModel' );
 var BrjsvctViewBlade = require( 'dashboard/brjsvct/BrjsvctViewModel' );
 var PopularcommandsViewBlade = require( 'dashboard/popularcommands/PopularcommandsViewModel' );
 var AvgfilesinappViewBlade = require( 'dashboard/avgfilesinapp/AvgfilesinappViewModel' );
+var AverageBundlesetDuration = require( 'dashboard/avgbundlesetduration/AverageBundlesetDurationViewModel' );
 var BrjsvctViewBlade = require( 'dashboard/brjsvct/BrjsvctViewModel' );
 var ActivitylogViewBlade = require( 'dashboard/activitylog/ActivitylogViewModel' );
 
@@ -29,6 +30,7 @@ var App = function() {
   this._addBladeToUI( BrjsvctViewBlade, 'dashboard.brjsvct.view-template' );
   this._addBladeToUI( PopularcommandsViewBlade, 'dashboard.popularcommands.view-template' );
   this._addBladeToUI( AvgfilesinappViewBlade, 'dashboard.avgfilesinapp.view-template' );
+  this._addBladeToUI( AverageBundlesetDuration, 'dashboard.avgbundlesetduration.view-template' );
   this._addBladeToUI( BrjsvctViewBlade, 'dashboard.brjsvct.view-template' );
   this._addBladeToUI( ActivitylogViewBlade, 'dashboard.activitylog.view-template' );
 };
