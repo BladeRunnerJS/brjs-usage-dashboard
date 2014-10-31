@@ -8,7 +8,7 @@ function Service() {
 	this._firebase = new Firebase( 'https://brjs-usage-dashboard.firebaseio.com/' );
 
 	this._bundleSets = this._firebase.child( 'bundlesets' );
-	this._commands = this._firebase.child( 'command' );
+	this._commands = this._firebase.child( 'commands' );
 	this._installs = this._firebase.child( 'installs' );
 
 	this._bundleSets.on( 'child_added', function( child ) {
