@@ -16,11 +16,16 @@ PopularcommandsViewModel.prototype.init = function() {
 	    groupBy: "command_name"
   });
 
-
-	window.KEEN_CLIENT.draw(popularCommands,
-		document.getElementById("popular-commands"), {
-		title: "Popular Commands",
+	var popularCommandsRequest = window.KEEN_CLIENT.run(popularCommands, function(response){
+		window.KEEN_CLIENT.draw(popularCommands,
+			document.getElementById("popular-commands"), {
+			title: "Popular Commands",
+		});
 	});
+
+	setInterval( function() {
+		popularCommands.refresh();
+	}, 10000 );
 
 }
 

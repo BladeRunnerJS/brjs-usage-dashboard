@@ -14,24 +14,30 @@ OsinfoViewModel.prototype.init = function() {
 		eventCollection: "installs",
 		groupBy: "os_name"
 	});
-	window.KEEN_CLIENT.draw(osName,
-		document.getElementById("os-info-name"), {
-		chartType: "piechart",
-		title: "OS Name"
+
+	var osNameRequest = window.KEEN_CLIENT.run(osName, function(response){
+		window.KEEN_CLIENT.draw(osName,
+			document.getElementById("os-info-name"), {
+			chartType: "piechart",
+			title: "OS Name"
+		});
 	});
 
 	var javaVersion = new Keen.Query("count", {
 		eventCollection: "installs",
 		groupBy: "java_version"
 	});
-	window.KEEN_CLIENT.draw(javaVersion,
-		document.getElementById("os-info-java-version"), {
-		chartType: "piechart",
-		title: "Java Version"
+	var javaVersionRequest = window.KEEN_CLIENT.run(javaVersion, function(response){
+		window.KEEN_CLIENT.draw(javaVersion,
+			document.getElementById("os-info-java-version"), {
+			chartType: "piechart",
+			title: "Java Version"
+		});
 	});
 
 	setInterval( function() {
-		request.refresh();
+		osNameRequest.refresh();
+		javaVersionRequest.refresh();
 	}, 10000 );
 }
 

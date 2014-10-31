@@ -13,10 +13,12 @@ BrjsvctViewModel.prototype.init = function() {
 		eventCollection: "installs",
 		groupBy: "toolkit_name"
 	});
-	window.KEEN_CLIENT.draw(brjs_v_ct,
-		document.getElementById("brjs-vs-ct"), {
-		chartType: "piechart",
-		title: "BRJS vs CT Installs"
+	var request = window.KEEN_CLIENT.run(brjs_v_ct, function(response){
+		window.KEEN_CLIENT.draw(brjs_v_ct,
+			document.getElementById("brjs-vs-ct"), {
+			chartType: "piechart",
+			title: "BRJS vs CT Installs"
+		});
 	});
 
 	setInterval( function() {
