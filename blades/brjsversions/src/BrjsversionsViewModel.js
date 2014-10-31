@@ -19,7 +19,6 @@ function BrjsversionsViewModel() {
 	});
 
 	setInterval( function() {
-		brjs_v_ct_request.refresh();
 		brjs_versions_request.refresh();
 	}, 10000 );
 
