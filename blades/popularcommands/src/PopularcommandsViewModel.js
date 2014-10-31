@@ -24,7 +24,7 @@ PopularcommandsViewModel.prototype.init = function() {
 	});
 
 	setInterval( function() {
-		popularCommands.refresh();
+		popularCommandsRequest.refresh();
 	}, 10000 );
 
 }
