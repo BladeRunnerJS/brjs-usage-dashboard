@@ -25,7 +25,7 @@ function ActivitylogViewModel() {
 ActivitylogViewModel.prototype.logActivity = function( activity, data ) {
 	// TODO: output to UI
 	// Maybe log with type and timestamp and then the ability to expand and see JSON?
-	this.activity.push( { type: activity, data: data } );
+	this.activity.unshift( { type: activity, data: data } );
 };
 
 ActivitylogViewModel.prototype.formatDate = function( val ) {
