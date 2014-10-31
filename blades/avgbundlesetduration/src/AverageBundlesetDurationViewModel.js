@@ -48,12 +48,18 @@ function AverageBundlesetDurationViewModel() {
 		});
 	});
 
-	// TODO: update to be triggered upon Firebase update
-	setInterval( function() {
+
+
+
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
 		minBundlesetExecTimeRequest.refresh();
 		averageBundlesetExecTimeRequest.refresh();
 		maxBundlesetExecTimeRequest.refresh();
-	}, 10000 );
+	}
+	statService.on( 'new_bundleset', function( data ) {
+		doUpdate();
+	}, this );
 
 }
 

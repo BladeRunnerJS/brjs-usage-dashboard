@@ -35,10 +35,15 @@ OsinfoViewModel.prototype.init = function() {
 		});
 	});
 
-	setInterval( function() {
+
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
 		osNameRequest.refresh();
 		javaVersionRequest.refresh();
-	}, 10000 );
+	}
+	statService.on( 'new_install', function( data ) {
+		doUpdate();
+	}, this );
 }
 
 module.exports = OsinfoViewModel;

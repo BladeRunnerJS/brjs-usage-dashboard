@@ -19,8 +19,16 @@ function BrjsversionsViewModel() {
 	});
 
 	setInterval( function() {
-		brjs_versions_request.refresh();
+
 	}, 10000 );
+
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
+		brjs_versions_request.refresh();
+	}
+	statService.on( 'new_install', function( data ) {
+		doUpdate();
+	}, this );
 
 }
 module.exports = BrjsversionsViewModel;

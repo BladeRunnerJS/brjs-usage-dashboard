@@ -21,9 +21,14 @@ BrjsvctViewModel.prototype.init = function() {
 		});
 	});
 
-	setInterval( function() {
+
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
 		brjs_v_ct_request.refresh();
-	}, 10000 );
+	}
+	statService.on( 'new_install', function( data ) {
+		doUpdate();
+	}, this );
 }
 
 module.exports = BrjsvctViewModel;

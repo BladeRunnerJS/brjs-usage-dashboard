@@ -52,12 +52,16 @@ function AverageFilesInApp() {
 		});
 	});
 
-	// TODO: update to be triggered upon Firebase update
-	setInterval( function() {
+
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
 		minAppFileRequest.refresh();
 		averageAppFileRequest.refresh();
 		maxAppFileRequest.refresh();
-	}, 10000 );
+	}
+	statService.on( 'new_bundleset', function( data ) {
+		doUpdate();
+	}, this );
 
 }
 

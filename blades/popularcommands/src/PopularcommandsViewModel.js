@@ -23,9 +23,13 @@ PopularcommandsViewModel.prototype.init = function() {
 		});
 	});
 
-	setInterval( function() {
+	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
+	function doUpdate() {
 		popularCommandsRequest.refresh();
-	}, 10000 );
+	}
+	statService.on( 'new_command', function( data ) {
+		doUpdate();
+	}, this );
 
 }
 

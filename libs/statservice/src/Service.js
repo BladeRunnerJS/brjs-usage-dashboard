@@ -5,6 +5,11 @@ var br = require( 'br/Core' );
 var Emitr = require( 'emitr' );
 
 function Service() {
+	this._triggerHackComplete = false;
+	setTimeout( function() {
+		this._triggerHackComplete = true;
+	}.bind( this ), 5000 );
+
 	this._firebase = new Firebase( 'https://brjs-usage-dashboard.firebaseio.com/' );
 
 	this._bundleSets = this._firebase.child( 'bundlesets' );
@@ -25,6 +30,14 @@ function Service() {
 }
 br.extend( Service, Emitr );
 
+// override trigger
+Service.prototype.trigger = function() {
+	if( this._triggerHackComplete === false ) {
+		return;
+	}
+
+	Emitr.prototype.trigger.apply( this, arguments );
+}
 
 Service.prototype.getBundleSets = function( callback ) {
 	getAllCollectionValues( this._bundleSets, callback );
