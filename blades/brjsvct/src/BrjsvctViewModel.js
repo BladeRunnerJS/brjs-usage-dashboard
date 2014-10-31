@@ -13,7 +13,7 @@ BrjsvctViewModel.prototype.init = function() {
 		eventCollection: "installs",
 		groupBy: "toolkit_name"
 	});
-	var request = window.KEEN_CLIENT.run(brjs_v_ct, function(response){
+	var brjs_v_ct_request = window.KEEN_CLIENT.run(brjs_v_ct, function(response){
 		window.KEEN_CLIENT.draw(brjs_v_ct,
 			document.getElementById("brjs-vs-ct"), {
 			chartType: "piechart",
@@ -22,7 +22,7 @@ BrjsvctViewModel.prototype.init = function() {
 	});
 
 	setInterval( function() {
-		request.refresh();
+		brjs_v_ct_request.refresh();
 	}, 10000 );
 }
 

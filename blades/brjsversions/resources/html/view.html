@@ -1,11 +1,15 @@
 <div id="dashboard.brjsversions.view-template">
-	<div class="default-brjsversions-blade">
-		<h1 class="hello-world-message">
-			 @{dashboard.brjsversions.hello.world}
-		</h1>
-		<p class="welcome-message" data-bind="text:welcomeMessage"></p>
-		<p>Try using alternative stylesheets to switch the theme.</p>
-		<p data-bind="text:buttonClickMessage"></p>
-		<button class="button" data-bind="click:buttonClicked">Say Hello!</button>
+
+	<div class="col-sm-6 col-md-4">
+		<div class="chart-wrapper">
+			<div class="chart-title">
+				BRJS Versions
+			</div>
+			<div class="chart-stage">
+				<div id="brjs-versions"></div>
+			</div>
+
+		</div>
 	</div>
+
 </div>
