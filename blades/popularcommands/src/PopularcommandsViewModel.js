@@ -20,6 +20,7 @@ PopularcommandsViewModel.prototype.init = function() {
 		window.KEEN_CLIENT.draw(popularCommands,
 			document.getElementById("popular-commands"), {
 			title: "Popular Commands",
+			width: 'auto'
 		});
 	});
 

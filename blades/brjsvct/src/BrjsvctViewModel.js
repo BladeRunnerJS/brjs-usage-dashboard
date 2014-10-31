@@ -17,7 +17,11 @@ BrjsvctViewModel.prototype.init = function() {
 		window.KEEN_CLIENT.draw(brjs_v_ct,
 			document.getElementById("brjs-vs-ct"), {
 			chartType: "piechart",
-			title: "BRJS vs CT Installs"
+			title: "BRJS vs CT Installs",
+			width: 'auto',
+			chartOptions: {
+				legend: { position: "bottom" },
+			}
 		});
 	});
 

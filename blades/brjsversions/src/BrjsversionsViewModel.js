@@ -14,13 +14,13 @@ function BrjsversionsViewModel() {
 		window.KEEN_CLIENT.draw(brjs_versions,
 			document.getElementById("brjs-versions"), {
 			chartType: "piechart",
-			title: "BRJS Versions"
+			title: "BRJS Versions",
+			width: 'auto',
+			chartOptions: {
+				legend: { position: "bottom" },
+			}
 		});
 	});
-
-	setInterval( function() {
-
-	}, 10000 );
 
 	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
 	function doUpdate() {

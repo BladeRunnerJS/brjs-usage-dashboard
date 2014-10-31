@@ -19,7 +19,11 @@ OsinfoViewModel.prototype.init = function() {
 		window.KEEN_CLIENT.draw(osName,
 			document.getElementById("os-info-name"), {
 			chartType: "piechart",
-			title: "OS Name"
+			title: "OS Name",
+			width: 'auto',
+			chartOptions: {
+				legend: { position: "bottom" },
+			}
 		});
 	});
 
@@ -31,7 +35,11 @@ OsinfoViewModel.prototype.init = function() {
 		window.KEEN_CLIENT.draw(javaVersion,
 			document.getElementById("os-info-java-version"), {
 			chartType: "piechart",
-			title: "Java Version"
+			title: "Java Version",
+			width: 'auto',
+			chartOptions: {
+				legend: { position: "bottom" },
+			}
 		});
 	});
 
