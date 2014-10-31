@@ -7,7 +7,16 @@ var ServiceRegistry = require( 'br/ServiceRegistry' );
 function ActivitylogViewModel() {
 	this._statService = ServiceRegistry.getService( 'stat.service' );
 
-	this.activity = ko.observableArray();
+	this.activity = ko.observableArray( [] );
+
+	var concat = function( type, coll ) {
+		coll.forEach( function( data ) {
+			this.logActivity( type, data );
+		}.bind( this ) )
+	}.bind( this );
+	this._statService.getBundleSets( function( err, coll ) { concat( 'bundleset', coll ); } );
+	this._statService.getCommands( function( err, coll ) { concat( 'command', coll ); } );
+	this._statService.getInstalls( function( err, coll ) { concat( 'install', coll ); } );
 
 	this._statService.on( 'new_bundleset', function( data ) {
 		this.logActivity( 'bundleset', data );

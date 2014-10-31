@@ -43,6 +43,14 @@ Service.prototype.getBundleSets = function( callback ) {
 	getAllCollectionValues( this._bundleSets, callback );
 };
 
+Service.prototype.getCommands = function( callback ) {
+	getAllCollectionValues( this._commands, callback );
+};
+
+Service.prototype.getInstalls = function( callback ) {
+	getAllCollectionValues( this._installs, callback );
+};
+
 function getAllCollectionValues( collection, callback ) {
 	collection.on( 'value', function( collection ) {
 
