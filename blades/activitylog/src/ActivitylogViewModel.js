@@ -1,10 +1,13 @@
 'use strict';
 
 var ko = require( 'ko' );
+var moment = require( 'momentjs' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
 
 function ActivitylogViewModel() {
 	this._statService = ServiceRegistry.getService( 'stat.service' );
+
+	this.activity = ko.observableArray();
 
 	this._statService.on( 'new_bundleset', function( data ) {
 		this.logActivity( 'bundleset', data );
@@ -22,11 +25,11 @@ function ActivitylogViewModel() {
 ActivitylogViewModel.prototype.logActivity = function( activity, data ) {
 	// TODO: output to UI
 	// Maybe log with type and timestamp and then the ability to expand and see JSON?
-	console.log( activity, data );
-	var el = document.createElement( 'div' );
-	var text = document.createTextNode( activity + ' : ' + JSON.stringify( data ) );
-	el.appendChild( text );
-	document.getElementById( 'activity-log' ).appendChild( el );
+	this.activity.push( { type: activity, data: data } );
+};
+
+ActivitylogViewModel.prototype.formatDate = function( val ) {
+	return moment( val ).startOf( 's' ).fromNow();
 };
 
 module.exports = ActivitylogViewModel;

@@ -6,7 +6,19 @@
 			Activity Log
 		</div>
 		<div class="chart-stage">
-			<div id="activity-log"></div>
+
+			<table>
+		    <thead>
+		        <tr><th>Activity</th><th></th></tr>
+		    </thead>
+		    <tbody data-bind="foreach: activity">
+		        <tr>
+		            <td data-bind="text: type"></td>
+		            <td data-bind="text: $parent.formatDate( data.timestamp )"></td>
+		        </tr>
+		    </tbody>
+			</table>
+
 		</div>
 		<!-- <div class="chart-notes">
 			Notes about this chart
