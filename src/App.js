@@ -30,6 +30,9 @@ App.prototype._addBladeToUI = function( BladeDefinition, viewId ) {
   var blade = new BladeDefinition();
   var component = new KnockoutComponent( viewId, blade );
   this._statsEl.appendChild( component.getElement() );
+  if (blade.init) {
+      blade.init();
+  }
 };
 
 module.exports = App;
