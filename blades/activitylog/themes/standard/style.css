@@ -2,3 +2,12 @@
     background-color: white;
     color: black;
 }
+
+.scrollable {
+  height: 424px;
+  overflow: scroll !important;
+}
+
+.scrollable table {
+  width: 100%;
+}

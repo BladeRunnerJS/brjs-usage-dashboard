@@ -5,7 +5,7 @@
 		<div class="chart-title">
 			Activity Log
 		</div>
-		<div class="chart-stage">
+		<div class="chart-stage scrollable">
 
 			<table>
 		    <tbody data-bind="foreach: activity">
@@ -15,7 +15,9 @@
 		        </tr>
 						<!-- TODO: toggle visibility of this ↓ -->
 						<tr>
-							<td colspan="2" data-bind="text: JSON.stringify( data )"></td>
+							<td colspan="2">
+								<pre data-bind="text: JSON.stringify( data, null, 2 )"></pre>
+							</td>
 						</tr>
 		    </tbody>
 			</table>
