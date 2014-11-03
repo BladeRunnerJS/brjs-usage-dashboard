@@ -4,14 +4,19 @@ var ServiceRegistry = require( 'br/ServiceRegistry' );
 var Keen = require( 'keen-js' );
 
 function BrjsversionsViewModel() {
-	this._statService = ServiceRegistry.getService( 'stat.service' );
+	var self = this;
 
-	var brjs_versions = this._statService.buildQuery("count", {
+	self._statService = ServiceRegistry.getService( 'stat.service' );
+	self._brjsVersionsChart = null;
+
+	var brjs_versions = self._statService.buildQuery("count", {
 		eventCollection: "installs",
 		groupBy: "toolkit_version"
 	});
-	var brjs_versions_request = this._statService.executeQuery(brjs_versions, function(){
-		new Keen.Visualization(this, document.getElementById("brjs-versions"), {
+	var brjs_versions_request = self._statService.executeQuery(brjs_versions, function(){
+		if( self._brjsVersionsChart ) self._brjsVersionsChart.remove();
+
+		self._brjsVersionsChart = new Keen.Visualization(this, document.getElementById("brjs-versions"), {
 			chartType: "piechart",
 			title: "BRJS Versions",
 			width: 'auto',
@@ -24,7 +29,7 @@ function BrjsversionsViewModel() {
 	function doUpdate() {
 		brjs_versions_request.refresh();
 	}
-	this._statService.on( 'new_install', doUpdate );
+	self._statService.on( 'new_install', doUpdate );
 
 }
 module.exports = BrjsversionsViewModel;

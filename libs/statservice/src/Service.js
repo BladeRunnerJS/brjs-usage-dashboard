@@ -13,6 +13,10 @@ function Service() {
 	} );
 	this._pusher = new Pusher( '054cce0687e2e37c48df' );
 
+	// Pusher.log = function(msg) {
+	// 	console.log(msg);
+	// };
+
 	this._bundleSets = this._pusher.subscribe( 'bundlesets' );
 	this._commands = this._pusher.subscribe( 'commands' );
 	this._installs = this._pusher.subscribe( 'installs' );

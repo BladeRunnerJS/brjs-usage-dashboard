@@ -4,8 +4,10 @@ var ServiceRegistry = require( 'br/ServiceRegistry' );
 var Keen = require( 'keen-js' );
 
 function PopularcommandsViewModel() {
+	var self = this;
 
-	this._statService = ServiceRegistry.getService( 'stat.service' );
+	self._statService = ServiceRegistry.getService( 'stat.service' );
+	self._chart = null;
 
 	var popularCommands = this._statService.buildQuery("count", {
 	    eventCollection: "commands",
@@ -14,8 +16,12 @@ function PopularcommandsViewModel() {
 	    groupBy: "command_name"
   });
 
-	var popularCommandsRequest = this._statService.executeQuery(popularCommands, function(){
-		new Keen.Visualization(this, document.getElementById("popular-commands"), {
+	var popularCommandsRequest = self._statService.executeQuery(popularCommands, function(){
+		if( self._chart ) {
+			self._chart.remove();
+		}
+
+		self._chart = new Keen.Visualization(this, document.getElementById("popular-commands"), {
 			title: "Popular Commands",
 			width: 'auto'
 		});
