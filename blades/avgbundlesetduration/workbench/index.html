@@ -44,11 +44,11 @@
 			ServiceRegistry.registerService( 'stat.service', statService );
 
 			// ViewModel that is being created in the workbench
-			var AvgfilesinappViewModel = require( 'dashboard/avgfilesinapp/AvgfilesinappViewModel' );
+			var AverageBundlesetDurationViewModel = require( 'dashboard/avgbundlesetduration/AverageBundlesetDurationViewModel' );
 			var KnockoutComponent = require( 'br/knockout/KnockoutComponent' );
 
-			var model = new AvgfilesinappViewModel();
-			var component = new KnockoutComponent( 'dashboard.avgfilesinapp.view-template', model );
+			var model = new AverageBundlesetDurationViewModel();
+			var component = new KnockoutComponent( 'dashboard.avgbundlesetduration.view-template', model );
 
 			addComponent( component, workbench )
 			addModelViewer( model, workbench );
