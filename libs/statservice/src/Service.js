@@ -46,28 +46,30 @@ Service.prototype.executeQuery = function( query, callback ) {
 };
 
 Service.prototype.getBundleSets = function( callback ) {
-	getAllCollectionValues( this._bundleSets, callback );
+	this._getAllCollectionValues( 'bundlesets', callback );
 };
 
 Service.prototype.getCommands = function( callback ) {
-	getAllCollectionValues( this._commands, callback );
+	this._getAllCollectionValues( 'commands', callback );
 };
 
 Service.prototype.getInstalls = function( callback ) {
-	getAllCollectionValues( this._installs, callback );
+	this._getAllCollectionValues( 'installs', callback );
 };
 
-function getAllCollectionValues( collection, callback ) {
-	collection.on( 'value', function( collection ) {
-
-		var collectionData = [];
-		collection.forEach( function( child ) {
-			var data = child.val();
-			collectionData.push( data );
-		} );
-		callback( null, collectionData );
-
+Service.prototype._getAllCollectionValues = function( collectionName, callback ) {
+	var extraction = new Keen.Query('extraction', {
+		eventCollection: collectionName
 	} );
-}
+
+	try {
+		this._keen.run( extraction, function( data ) {
+			callback( null, data.result );
+		} );
+	}
+	catch( e ) {
+		callback( e );
+	}
+};
 
 module.exports = Service;

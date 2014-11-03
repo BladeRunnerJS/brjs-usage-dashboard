@@ -15,8 +15,8 @@ function ActivitylogViewModel() {
 		}.bind( this ) )
 	}.bind( this );
 	this._statService.getBundleSets( function( err, coll ) { concat( 'bundleset', coll ); } );
-	this._statService.getCommands( function( err, coll ) { concat( 'command', coll ); } );
-	this._statService.getInstalls( function( err, coll ) { concat( 'install', coll ); } );
+	// this._statService.getCommands( function( err, coll ) { concat( 'command', coll ); } );
+	// this._statService.getInstalls( function( err, coll ) { concat( 'install', coll ); } );
 
 	this._statService.on( 'new_bundleset', function( data ) {
 		this.logActivity( 'bundleset', data );
