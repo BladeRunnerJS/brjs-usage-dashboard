@@ -58,7 +58,8 @@ Service.prototype.getInstalls = function( callback ) {
 
 Service.prototype._getAllCollectionValues = function( collectionName, callback ) {
 	var extraction = new Keen.Query('extraction', {
-		eventCollection: collectionName
+		eventCollection: collectionName,
+		latest: 10
 	} );
 
 	try {
