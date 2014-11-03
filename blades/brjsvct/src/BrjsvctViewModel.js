@@ -1,21 +1,18 @@
 'use strict';
 
-var ko = require( 'ko' );
-var i18n = require( 'br/I18n' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
+var Keen = require( 'keen-js' );
 
 function BrjsvctViewModel() {
-}
+	this._statService = ServiceRegistry.getService( 'stat.service' );
 
-BrjsvctViewModel.prototype.init = function() {
-
-	var brjs_v_ct = new Keen.Query("count", {
+	var brjs_v_ct = this._statService.buildQuery("count", {
 		eventCollection: "installs",
 		groupBy: "toolkit_name"
 	});
-	var brjs_v_ct_request = window.KEEN_CLIENT.run(brjs_v_ct, function(response){
-		window.KEEN_CLIENT.draw(brjs_v_ct,
-			document.getElementById("brjs-vs-ct"), {
+	var brjs_v_ct_request = this._statService.executeQuery(brjs_v_ct, function(){
+
+		new Keen.Visualization(this, document.getElementById("brjs-vs-ct"), {
 			chartType: "piechart",
 			title: "BRJS vs CT Installs",
 			width: 'auto',
@@ -23,16 +20,14 @@ BrjsvctViewModel.prototype.init = function() {
 				legend: { position: "bottom" },
 			}
 		});
+
 	});
 
 
-	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
 	function doUpdate() {
 		brjs_v_ct_request.refresh();
 	}
-	statService.on( 'new_install', function( data ) {
-		doUpdate();
-	}, this );
+	this._statService.on( 'new_install', doUpdate );
 }
 
 module.exports = BrjsvctViewModel;

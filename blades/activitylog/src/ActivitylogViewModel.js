@@ -12,11 +12,11 @@ function ActivitylogViewModel() {
 	var concat = function( type, coll ) {
 		coll.forEach( function( data ) {
 			this.logActivity( type, data );
-		}.bind( this ) )
+		}.bind( this ) );
 	}.bind( this );
 	this._statService.getBundleSets( function( err, coll ) { concat( 'bundleset', coll ); } );
-	// this._statService.getCommands( function( err, coll ) { concat( 'command', coll ); } );
-	// this._statService.getInstalls( function( err, coll ) { concat( 'install', coll ); } );
+	this._statService.getCommands( function( err, coll ) { concat( 'command', coll ); } );
+	this._statService.getInstalls( function( err, coll ) { concat( 'install', coll ); } );
 
 	this._statService.on( 'new_bundleset', function( data ) {
 		this.logActivity( 'bundleset', data );
@@ -32,8 +32,6 @@ function ActivitylogViewModel() {
 }
 
 ActivitylogViewModel.prototype.logActivity = function( activity, data ) {
-	// TODO: output to UI
-	// Maybe log with type and timestamp and then the ability to expand and see JSON?
 	this.activity.unshift( { type: activity, data: data } );
 };
 

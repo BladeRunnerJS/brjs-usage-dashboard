@@ -3,10 +3,13 @@
 	<head>
 		<@base.tag@/>
 		<meta charset="UTF-8">
-		
+
 		<title>Workbench</title>
 
 		<@css.bundle theme="standard" alternateTheme="alternate" @/>
+		<style type="text/css">
+			.chart-wrapper { width: 500px; }
+		</style>
 
 	</head>
 	<body>
@@ -38,6 +41,10 @@
 			var Workbench = require( 'br/workbench/ui/Workbench' );
 			var workbench = new Workbench(250, 310);
 			addEventHubLogger( workbench );
+
+			var StatsService = require( 'statservice/Service' );
+			var statService = new StatsService();
+			ServiceRegistry.registerService( 'stat.service', statService );
 
 			// ViewModel that is being created in the workbench
 			var PopularcommandsViewModel = require( 'dashboard/popularcommands/PopularcommandsViewModel' );

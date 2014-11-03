@@ -1,23 +1,18 @@
 'use strict';
 
-var ko = require( 'ko' );
-var i18n = require( 'br/I18n' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
+var Keen = require( 'keen-js' );
 
 function OsinfoViewModel() {
-}
+	this._statService = ServiceRegistry.getService( 'stat.service' );
 
-
-OsinfoViewModel.prototype.init = function() {
-
-	var osName = new Keen.Query("count", {
+	var osName = this._statService.buildQuery("count", {
 		eventCollection: "installs",
 		groupBy: "os_name"
 	});
 
-	var osNameRequest = window.KEEN_CLIENT.run(osName, function(response){
-		window.KEEN_CLIENT.draw(osName,
-			document.getElementById("os-info-name"), {
+	var osNameRequest = this._statService.executeQuery(osName, function(){
+		new Keen.Visualization(this, document.getElementById("os-info-name"), {
 			chartType: "piechart",
 			title: "OS Name",
 			width: 'auto',
@@ -27,13 +22,12 @@ OsinfoViewModel.prototype.init = function() {
 		});
 	});
 
-	var javaVersion = new Keen.Query("count", {
+	var javaVersion = this._statService.buildQuery("count", {
 		eventCollection: "installs",
 		groupBy: "java_version"
 	});
-	var javaVersionRequest = window.KEEN_CLIENT.run(javaVersion, function(response){
-		window.KEEN_CLIENT.draw(javaVersion,
-			document.getElementById("os-info-java-version"), {
+	var javaVersionRequest = this._statService.executeQuery(javaVersion, function(){
+		new Keen.Visualization(this, document.getElementById("os-info-java-version"), {
 			chartType: "piechart",
 			title: "Java Version",
 			width: 'auto',
@@ -43,15 +37,11 @@ OsinfoViewModel.prototype.init = function() {
 		});
 	});
 
-
-	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
 	function doUpdate() {
 		osNameRequest.refresh();
 		javaVersionRequest.refresh();
 	}
-	statService.on( 'new_install', function( data ) {
-		doUpdate();
-	}, this );
+	this._statService.on( 'new_install', doUpdate );
 }
 
 module.exports = OsinfoViewModel;

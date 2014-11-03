@@ -1,36 +1,30 @@
 'use strict';
 
-var ko = require( 'ko' );
-var i18n = require( 'br/I18n' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
+var Keen = require( 'keen-js' );
 
 function PopularcommandsViewModel() {
-}
 
-PopularcommandsViewModel.prototype.init = function() {
+	this._statService = ServiceRegistry.getService( 'stat.service' );
 
-	var popularCommands = new Keen.Query("count", {
+	var popularCommands = this._statService.buildQuery("count", {
 	    eventCollection: "commands",
 	    timeframe: "this_7_days",
 	    interval: "daily",
 	    groupBy: "command_name"
   });
 
-	var popularCommandsRequest = window.KEEN_CLIENT.run(popularCommands, function(response){
-		window.KEEN_CLIENT.draw(popularCommands,
-			document.getElementById("popular-commands"), {
+	var popularCommandsRequest = this._statService.executeQuery(popularCommands, function(){
+		new Keen.Visualization(this, document.getElementById("popular-commands"), {
 			title: "Popular Commands",
 			width: 'auto'
 		});
 	});
 
-	var statService = require("br/ServiceRegistry").getService( 'stat.service' );
 	function doUpdate() {
 		popularCommandsRequest.refresh();
 	}
-	statService.on( 'new_command', function( data ) {
-		doUpdate();
-	}, this );
+	this._statService.on( 'new_command', doUpdate );
 
 }
 

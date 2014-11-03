@@ -31,11 +31,6 @@ function Service() {
 }
 br.extend( Service, Emitr );
 
-// override trigger
-Service.prototype.trigger = function() {
-	Emitr.prototype.trigger.apply( this, arguments );
-};
-
 Service.prototype.buildQuery = function( analysisType, params ) {
 	var query = new Keen.Query( analysisType, params );
 	return query;
