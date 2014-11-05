@@ -19,6 +19,17 @@ var App = function() {
 
   this._statsEl = document.getElementById("stats");
 
+  // Hack: Keen uses Google charts and we're occasionally seeing
+  // a problem where the google library hasn't yet loaded.
+  var waitForGoogle = setInterval( function() {
+    if( typeof google !== 'undefined' ) {
+      this._addBlades();
+      clearInterval( waitForGoogle );
+    }
+  }.bind( this ), 200 );
+};
+
+App.prototype._addBlades = function() {
   this._addBladeToUI( OSInfoBlade, 'dashboard.osinfo.view-template' );
   this._addBladeToUI( BrjsvctViewBlade, 'dashboard.brjsvct.view-template' );
   this._addBladeToUI( BrjsVersionsViewBlade, 'dashboard.brjsversions.view-template' );
