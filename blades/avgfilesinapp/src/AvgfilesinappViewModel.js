@@ -1,21 +1,20 @@
 'use strict';
 
-var Keen = require( 'keen-js' );
 var ServiceRegistry = require( 'br/ServiceRegistry' );
 
 function AverageFilesInApp() {
+	var self = this;
 
-	this._statService = ServiceRegistry.getService( 'stat.service' );
+	self._statService = ServiceRegistry.getService( 'stat.service' );
 
-	var minAppFileCount = this._statService.buildQuery("minimum", {
+	// Minimum number of files found in a BRJS app
+	var minAppFileCount = self._statService.buildQuery("minimum", {
   		eventCollection: "bundlesets",
-  		targetProperty: "file_count.total_count" // get sub-property - cool that you can do this!
+  		targetProperty: "file_count.total_count"
 	});
 
-	// TODO: separate request and response from UI update (Visualization)
-	var minAppFileRequest = this._statService.executeQuery(minAppFileCount, function(){
-	  // Pass in raw data, or reference to "this" (request instance)
-	  new Keen.Visualization(this, document.getElementById("min-files"), {
+	var minAppFileRequest = self._statService.executeQuery(minAppFileCount, function(){
+	  self._statService.createVisualisation(this, document.getElementById("min-files"), {
 		  chartType: "metric",
 		  title: "Min Files",
 		  colors: ["#49c5b1"],
@@ -23,31 +22,29 @@ function AverageFilesInApp() {
 		});
 	});
 
-	var averageAppFileCount = this._statService.buildQuery("average", {
+	// Average number of files in a BRJS app
+	var averageAppFileCount = self._statService.buildQuery("average", {
 		eventCollection: "bundlesets",
-		targetProperty: "file_count.total_count" // get sub-property - cool that you can do this!
+		targetProperty: "file_count.total_count"
 	});
 
-	// TODO: separate request and response from UI update (Visualization)
-	var averageAppFileRequest = this._statService.executeQuery(averageAppFileCount, function(){
-	// Pass in raw data, or reference to "this" (request instance)
-	new Keen.Visualization(this, document.getElementById("avg-files"), {
-		chartType: "metric",
-		title: "Avg Files",
-		colors: ["#49c5b1"],
-			width: 'auto'
-		});
+	var averageAppFileRequest = self._statService.executeQuery(averageAppFileCount, function(){
+		self._statService.createVisualisation(this, document.getElementById("avg-files"), {
+			chartType: "metric",
+			title: "Avg Files",
+			colors: ["#49c5b1"],
+				width: 'auto'
+			});
 	});
 
-	var maxAppFileCount = this._statService.buildQuery("maximum", {
+	// Maximum number of files found in a BRJS app
+	var maxAppFileCount = self._statService.buildQuery("maximum", {
 		eventCollection: "bundlesets",
-		targetProperty: "file_count.total_count" // get sub-property - cool that you can do this!
+		targetProperty: "file_count.total_count"
 	});
 
-	// TODO: separate request and response from UI update (Visualization)
-	var maxAppFileRequest = this._statService.executeQuery(maxAppFileCount, function(){
-	// Pass in raw data, or reference to "this" (request instance)
-	new Keen.Visualization(this, document.getElementById("max-files"), {
+	var maxAppFileRequest = self._statService.executeQuery(maxAppFileCount, function(){
+	self._statService.createVisualisation(this, document.getElementById("max-files"), {
 		chartType: "metric",
 		title: "Max Files",
 		colors: ["#49c5b1"],
@@ -61,7 +58,7 @@ function AverageFilesInApp() {
 		averageAppFileRequest.refresh();
 		maxAppFileRequest.refresh();
 	}
-	this._statService.on( 'new_bundleset', doUpdate );
+	self._statService.on( 'new_bundleset', doUpdate );
 
 }
 

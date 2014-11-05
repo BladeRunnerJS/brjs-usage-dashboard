@@ -1,7 +1,6 @@
 'use strict';
 
 var ServiceRegistry = require( 'br/ServiceRegistry' );
-var Keen = require( 'keen-js' );
 
 function PopularcommandsViewModel() {
 	var self = this;
@@ -9,7 +8,7 @@ function PopularcommandsViewModel() {
 	self._statService = ServiceRegistry.getService( 'stat.service' );
 	self._chart = null;
 
-	var popularCommands = this._statService.buildQuery("count", {
+	var popularCommands = self._statService.buildQuery("count", {
 	    eventCollection: "commands",
 	    timeframe: "this_7_days",
 	    interval: "daily",
@@ -21,7 +20,7 @@ function PopularcommandsViewModel() {
 			self._chart.remove();
 		}
 
-		self._chart = new Keen.Visualization(this, document.getElementById("popular-commands"), {
+		self._chart = self._statService.createVisualisation(this, document.getElementById("popular-commands"), {
 			title: "Popular Commands",
 			width: 'auto'
 		});
@@ -30,7 +29,7 @@ function PopularcommandsViewModel() {
 	function doUpdate() {
 		popularCommandsRequest.refresh();
 	}
-	this._statService.on( 'new_command', doUpdate );
+	self._statService.on( 'new_command', doUpdate );
 
 }
 

@@ -44,6 +44,10 @@ Service.prototype.executeQuery = function( query, callback ) {
 	return this._keen.run( query, callback );
 };
 
+Service.prototype.createVisualisation = function( req, el, options ) {
+	return new Keen.Visualization( req, el, options );
+};
+
 Service.prototype.getBundleSets = function( callback ) {
 	this._getAllCollectionValues( 'bundlesets', callback );
 };

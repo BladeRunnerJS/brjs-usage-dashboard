@@ -1,18 +1,20 @@
 'use strict';
 
 var ServiceRegistry = require( 'br/ServiceRegistry' );
-var Keen = require( 'keen-js' );
 
 function BrjsvctViewModel() {
-	this._statService = ServiceRegistry.getService( 'stat.service' );
+	var self = this;
 
-	var brjs_v_ct = this._statService.buildQuery("count", {
+	self._statService = ServiceRegistry.getService( 'stat.service' );
+
+	// How many are BRJS toolkits and how many are Caplin Trader toolkits?
+	var brjsVersusCTQuery = self._statService.buildQuery("count", {
 		eventCollection: "installs",
 		groupBy: "toolkit_name"
 	});
-	var brjs_v_ct_request = this._statService.executeQuery(brjs_v_ct, function(){
+	var brjsVersusCTRequest = self._statService.executeQuery(brjsVersusCTQuery, function(){
 
-		new Keen.Visualization(this, document.getElementById("brjs-vs-ct"), {
+		self._statService.createVisualisation(this, document.getElementById("brjs-vs-ct"), {
 			chartType: "piechart",
 			title: "BRJS vs CT Installs",
 			width: 'auto',
@@ -23,11 +25,10 @@ function BrjsvctViewModel() {
 
 	});
 
-
 	function doUpdate() {
-		brjs_v_ct_request.refresh();
+		brjsVersusCTRequest.refresh();
 	}
-	this._statService.on( 'new_install', doUpdate );
+	self._statService.on( 'new_install', doUpdate );
 }
 
 module.exports = BrjsvctViewModel;
