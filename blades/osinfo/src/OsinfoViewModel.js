@@ -10,15 +10,21 @@ function OSInformation() {
 	// Operating systems that BRJS has been installed on
 	var osName = this._statService.buildQuery("count", {
 		eventCollection: "installs",
-		groupBy: "os_name"
+		groupBy: "os_name",
+		filters: [{"property_name":"os_name","operator":"ne","property_value":"Windows"},
+							{"property_name":"os_name","operator":"ne","property_value":"Test"}]
 	});
 
 	this._osNameRequest = this._statService.executeQuery(osName, this._osNameExecutionComplete.bind( this ) );
 
 	// Versions of Java BRJS is being run on
+	// TODO: The filters are to remove obvious test data and
+	// can be removed once we have a production specific Keen IO project
 	var javaVersion = this._statService.buildQuery("count", {
 		eventCollection: "installs",
-		groupBy: "java_version"
+		groupBy: "java_version",
+		filters: [ {"property_name":"java_version", "operator":"ne","property_value":"1.1"},
+							 {"property_name":"java_version","operator":"not_contains","property_value":"null"}]
 	});
 
 	this._javaVersionRequest =
